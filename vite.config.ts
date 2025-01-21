@@ -3,9 +3,18 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://vendor-portal-api.onrender.com',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
+      }
+    }
+  },
   build: {
     rollupOptions: {
-      // Remove external configuration as we want to bundle lucide-react
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom', 'lucide-react'],
@@ -13,17 +22,7 @@ export default defineConfig({
       },
     },
   },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'https://vendor-portal-api.onrender.com',
-        changeOrigin: true,
-        secure: false,
-      },
-    },
-  },
   resolve: {
-    // Ensure proper module resolution
     dedupe: ['react', 'react-dom', 'lucide-react'],
   },
 });

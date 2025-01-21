@@ -11,18 +11,16 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
-// Configure CORS for production
+// Configure CORS
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'http://127.0.0.1:5173',
-    'https://project-6-suguslove10-sugureshs-projects.vercel.app',
-    'https://vendor-portal-react.vercel.app'
-  ],
+  origin: true, // This allows all origins
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept']
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Pre-flight requests
+app.options('*', cors());
 
 // Middleware
 app.use(express.json());

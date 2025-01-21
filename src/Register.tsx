@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Store } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 function Register() {
   const navigate = useNavigate();
   const [email, setEmail] = React.useState('');
@@ -19,13 +17,13 @@ function Register() {
     setError('');
 
     try {
-      const response = await fetch(`${API_URL}/auth/register`, {
+      const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
         },
         body: JSON.stringify({ email, password, storeName }),
+        credentials: 'include'
       });
 
       const data = await response.json();
@@ -34,10 +32,8 @@ function Register() {
         throw new Error(data.message || 'Registration failed');
       }
 
-      // Show success message
       setSuccess(true);
       
-      // Redirect to login page after 2 seconds
       setTimeout(() => {
         navigate('/');
       }, 2000);
