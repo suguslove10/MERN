@@ -5,7 +5,12 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      external: ['lucide-react'],
+      // Remove external configuration as we want to bundle lucide-react
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom', 'lucide-react'],
+        },
+      },
     },
   },
   server: {
@@ -16,5 +21,9 @@ export default defineConfig({
         secure: false,
       },
     },
+  },
+  resolve: {
+    // Ensure proper module resolution
+    dedupe: ['react', 'react-dom', 'lucide-react'],
   },
 });
