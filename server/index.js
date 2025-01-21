@@ -13,15 +13,10 @@ connectDB();
 
 // Configure CORS for production
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'http://127.0.0.1:5173',
-    'https://project-6-q4r62gsn8-sugureshs-projects.vercel.app',
-    'https://project-6-llnff42d4-sugureshs-projects.vercel.app'
-  ],
+  origin: '*', // Allow all origins during development
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept']
 }));
 
 // Middleware

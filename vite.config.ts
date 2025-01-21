@@ -5,7 +5,16 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      external: [],
+      external: ['lucide-react'],
+    },
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://vendor-portal-api.onrender.com',
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
 });
